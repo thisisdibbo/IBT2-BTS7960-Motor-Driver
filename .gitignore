@@ -1,0 +1,14 @@
+# EAGLE backup, auto-save and lock files
+*.b#?
+*.s#?
+*.l#?
+*.b$?
+*.s$?
+*.l$?
+*.lck
+eagle.epf
+
+# OS clutter
+Thumbs.db
+desktop.ini
+.DS_Store
