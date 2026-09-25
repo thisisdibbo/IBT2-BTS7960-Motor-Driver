@@ -290,9 +290,8 @@ Planned for the next revision:
 
 ## Author
 
-**Md. Mahin Rahman**<br>
-Department of Electrical and Electronic Engineering, Islamic University of Technology (IUT), Gazipur, Bangladesh<br>
-GitHub: [@thisisdibbo](https://github.com/thisisdibbo)
+**Md. Mahin Rahman** — [@thisisdibbo](https://github.com/thisisdibbo) · [mr.d2003feb@gmail.com](mailto:mr.d2003feb@gmail.com)<br>
+Department of Electrical and Electronic Engineering, Islamic University of Technology (IUT), Gazipur, Bangladesh
 
 ## License
 
