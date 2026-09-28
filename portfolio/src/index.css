@@ -1,0 +1,170 @@
+@import 'tailwindcss';
+
+/* Design tokens: near-black ground, warm off-white type, one electric coral accent. */
+:root {
+  --background: hsl(0, 0%, 6%);
+  --foreground: hsl(30, 12%, 94%);
+  --primary: hsl(8, 92%, 62%); /* electric coral */
+  --primary-foreground: hsl(0, 0%, 6%);
+  --muted-foreground: hsl(30, 4%, 58%);
+  --border: hsl(0, 0%, 16%);
+  --card: hsl(0, 0%, 9%);
+
+  --nav-height: 72px;
+  --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+
+  --font-display: 'Syne', 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee-fast: marquee 22s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Unlayered on purpose: host pages (and embeds) that style html/body without layers
+   would otherwise win over Tailwind's layered base and repaint the page light. */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+}
+
+/* Type scale from the brief */
+@utility type-label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--primary);
+}
+
+@utility type-h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(30px, 4vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+
+@utility type-body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+@utility type-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+/*
+  Hero composition. Everything is sized from one variable, --F (the name's font size),
+  so the overlap between name and portrait holds at every viewport:
+  - "RAHMAN" in Syne 800 is 7.47em wide, so --F fits it edge to edge across the viewport,
+    and the viewport height caps it so the whole stack stays inside the first screen.
+  - The portrait is 3.3 x --F tall. The head rises above the name, line one passes
+    behind the shoulders and line two runs in front of the chest.
+  Phones and portrait tablets stack the two lines and put the portrait underneath.
+*/
+@custom-variant overlap (@media (min-width: 768px) and (min-aspect-ratio: 4/5));
+
+.hero-stack {
+  --F: calc((100vw - 32px) / 7.5);
+  position: relative;
+  width: 100%;
+}
+
+.hero-line {
+  font-size: var(--F);
+  padding-block: 0.06em;
+  margin-block: -0.06em;
+}
+
+.hero-portrait {
+  height: min(56svh, 520px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 74%, transparent 98%);
+  mask-image: linear-gradient(to bottom, #000 74%, transparent 98%);
+}
+
+@media (min-width: 768px) and (min-aspect-ratio: 4/5) {
+  .hero-stack {
+    --F: clamp(40px, min(calc((100vw - 40px) / 7.5), calc((100svh - 250px) / 3.3)), 300px);
+    --P: calc(var(--F) * 3.3);
+    --line1: calc(var(--F) * 0.95);
+    --line2: calc(var(--F) * 1.8);
+    height: var(--P);
+  }
+
+  .hero-portrait {
+    height: var(--P);
+  }
+}
